@@ -2,7 +2,7 @@ import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import classes from './App.module.css';
 
-import Dropdown from './components/Dropdown';
+import Select from './components/Select';
 import Background from './assets/bg.jpg';
 
 class App extends React.Component {
@@ -89,7 +89,7 @@ class App extends React.Component {
             value={companyValuation}
             onChange={e => this.handleChange(e.target.value, 'companyValuation')}
           />
-          <Dropdown
+          <Select
             setValueFn={this.prefillCompanyValuation}
             options={[
               { option: 'Seed', value: 5000000 },
@@ -105,7 +105,7 @@ class App extends React.Component {
             value={numberOfShares}
             onChange={e => this.handleChange(e.target.value, 'numberOfShares')}
           />
-          <Dropdown
+          <Select
             setValueFn={this.prefillNumberOfShares}
             options={[
               { option: 'Junior Engineer', value: 80000 },

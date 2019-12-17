@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
-import classes from './Dropdown.module.css';
+import classes from './Select.module.css';
 
-const DropdownButton = props => {
+const SelectButton = props => {
   const { name, index, selected, onClickFn } = props;
 
   let cssClass = `${classes.button}`;
@@ -16,7 +16,7 @@ const DropdownButton = props => {
   );
 };
 
-class Dropdown extends PureComponent {
+class Select extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +43,7 @@ class Dropdown extends PureComponent {
       ? options.map((button, index) => {
           const selected = index === selectedOption;
           return (
-            <DropdownButton
+            <SelectButton
               key={button.option}
               onClickFn={this.handleButtonClick}
               className={classes.buttons}
@@ -58,4 +58,4 @@ class Dropdown extends PureComponent {
   }
 }
 
-export default Dropdown;
+export default Select;
