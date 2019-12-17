@@ -17,12 +17,9 @@ const SelectButton = props => {
 };
 
 class Select extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      selectedOption: null,
-    };
-  }
+  state = {
+    selectedOption: null,
+  };
 
   handleButtonClick = index => {
     const { selectedOption } = this.state;
@@ -40,20 +37,21 @@ class Select extends PureComponent {
     const { options } = this.props;
 
     const allButtons = options
-      ? options.map((button, index) => {
+      ? options.map((option, index) => {
           const selected = index === selectedOption;
           return (
             <SelectButton
-              key={button.option}
+              key={option.label}
               onClickFn={this.handleButtonClick}
               className={classes.buttons}
-              name={button.option}
+              name={option.label}
               index={index}
               selected={selected}
             />
           );
         })
       : null;
+
     return <div className={classes.allButtons}>{allButtons}</div>;
   }
 }

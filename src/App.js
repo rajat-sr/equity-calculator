@@ -19,17 +19,21 @@ class App extends React.Component {
   };
 
   isInputValid = (input, field) => {
-    const naturalNumbersRegex = /^[0-9]+$|^$/;
-    const decimalNumbersRegex = /^[0-9]+$|^[0-9]+\.[0-9]*$|^$/;
+    const naturalNumbersPattern = /^[0-9]+$|^$/;
+    const decimalNumbersPattern = /^[0-9]+$|^[0-9]+\.[0-9]*$|^$/;
 
     if (field === 'companyValuation') {
-      return decimalNumbersRegex.test(input);
+      return decimalNumbersPattern.test(input);
     }
-    return naturalNumbersRegex.test(input);
+    return naturalNumbersPattern.test(input);
   };
 
   calculateWorth = () => {
     const { totalShares, companyValuation, numberOfShares } = this.state;
+
+    if (!totalShares && companyValuation) {
+      return companyValuation;
+    }
 
     const pricePerShare = companyValuation / totalShares;
     const valueOfShares = pricePerShare * numberOfShares;
@@ -56,18 +60,11 @@ class App extends React.Component {
   render() {
     const { totalShares, companyValuation, numberOfShares } = this.state;
 
-    const holdings = this.calculateWorth();
-    const totalWorth =
-      typeof holdings === 'number' && !Number.isNaN(holdings)
-        ? this.formatAmount(holdings)
+    const totalWorth = this.calculateWorth();
+    const totalWorthInUSD =
+      typeof totalWorth === 'number' && !Number.isNaN(totalWorth)
+        ? this.formatAmount(totalWorth)
         : '$0.00';
-
-    const resultComponent = (
-      <>
-        <p className={classes.resultText}>Your Shares Are Worth</p>
-        <p className={classes.amount}>{totalWorth}</p>
-      </>
-    );
 
     return (
       <div className={classes.main}>
@@ -83,7 +80,7 @@ class App extends React.Component {
           />
           <TextField
             id="company-valuation"
-            label="The Current Value Of The Company (in USD)"
+            label="Company Valuation (in USD)"
             className={classes.textInput}
             margin="normal"
             value={companyValuation}
@@ -93,14 +90,14 @@ class App extends React.Component {
           <Select
             setValueFn={this.prefillCompanyValuation}
             options={[
-              { option: 'Seed', value: 5000000 },
-              { option: 'Series A', value: 10000000 },
-              { option: 'Series B', value: 15000000 },
+              { label: 'Seed', value: 5000000 },
+              { label: 'Series A', value: 10000000 },
+              { label: 'Series B', value: 15000000 },
             ]}
           />
           <TextField
             id="number-of-shares"
-            label="Number Of Shares You Own In The Company"
+            label="Number Of Shares You Own"
             className={classes.textInput}
             margin="normal"
             value={numberOfShares}
@@ -110,13 +107,14 @@ class App extends React.Component {
           <Select
             setValueFn={this.prefillNumberOfShares}
             options={[
-              { option: 'Junior Engineer', value: 80000 },
-              { option: 'Senior Engineer', value: 125000 },
-              { option: 'CTO', value: 200000 },
+              { label: 'Junior Engineer', value: 80000 },
+              { label: 'Senior Engineer', value: 125000 },
+              { label: 'CTO', value: 200000 },
             ]}
           />
           <div className={classes.result} style={{ backgroundImage: `url(${Background})` }}>
-            {resultComponent}
+            <p className={classes.resultText}>Your Shares Are Worth</p>
+            <p className={classes.amount}>{totalWorthInUSD}</p>
           </div>
         </div>
       </div>
