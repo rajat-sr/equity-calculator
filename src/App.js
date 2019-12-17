@@ -8,7 +8,7 @@ import Dropdown from './components/Dropdown';
 
 class App extends React.Component {
   state = {
-    totalShares: 1000,
+    totalShares: 1000000,
     companyValuation: '',
     numberOfShares: '',
   };
@@ -49,6 +49,10 @@ class App extends React.Component {
   prefillNumberOfShares = value => {
     this.setState({ numberOfShares: value });
   };
+
+  prefillCompanyValuation = value => {
+    this.setState({ companyValuation: value });
+  }
 
   render() {
     const { totalShares, companyValuation, numberOfShares } = this.state;
@@ -94,6 +98,14 @@ class App extends React.Component {
               startAdornment: <InputAdornment position="start">$</InputAdornment>,
             }}
           />
+          <Dropdown
+            setValueFn={this.prefillCompanyValuation}
+            options={[
+              { option: 'Seed', value: 5000000 },
+              { option: 'Series A', value: 10000000 },
+              { option: 'Series B', value: 15000000 },
+            ]}
+          />
           <TextField
             id="number-of-shares"
             label="Number Of Shares You Own In The Company"
@@ -108,9 +120,9 @@ class App extends React.Component {
           <Dropdown
             setValueFn={this.prefillNumberOfShares}
             options={[
-              { name: 'Junior Engineer', value: 80000 },
-              { name: 'Senior Engineer', value: 125000 },
-              { name: 'CTO', value: 200000 },
+              { option: 'Junior Engineer', value: 80000 },
+              { option: 'Senior Engineer', value: 125000 },
+              { option: 'CTO', value: 200000 },
             ]}
           />
           <div className={classes.result}>{resultComponent}</div>

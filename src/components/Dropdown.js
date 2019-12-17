@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import classes from './Dropdown.module.css';
 
 const DropdownButton = props => {
@@ -16,7 +16,7 @@ const DropdownButton = props => {
   );
 };
 
-class Dropdown extends Component {
+class Dropdown extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -44,10 +44,10 @@ class Dropdown extends Component {
           const selected = index === selectedOption;
           return (
             <DropdownButton
-              key={button.name}
+              key={button.option}
               onClickFn={this.handleButtonClick}
               className={classes.buttons}
-              name={button.name}
+              name={button.option}
               index={index}
               selected={selected}
             />
