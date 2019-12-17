@@ -1,0 +1,33 @@
+.Main {
+  height: 100vh;
+  width: 100vw;
+  background-color: #222;
+}
+
+.Card {
+  width: 700px;
+  margin: auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  box-shadow: 0 10px 20px 10px #00000099;
+  text-align: center;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.TextInput {
+  width: 350px;
+}
+
+.Result {
+  background-color: rgb(16, 119, 122);
+  padding: 20px 0px;
+  margin-top: 40px;
+  width: 100%;
+  color: white;
+}
