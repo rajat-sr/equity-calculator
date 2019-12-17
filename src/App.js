@@ -8,7 +8,7 @@ import Background from './assets/bg.jpg';
 
 class App extends React.Component {
   state = {
-    totalShares: 1000000,
+    totalShares: '',
     companyValuation: '',
     numberOfShares: '',
   };
@@ -34,7 +34,7 @@ class App extends React.Component {
 
     const pricePerShare = companyValuation / totalShares;
     const valueOfShares = pricePerShare * numberOfShares;
-    return valueOfShares === Infinity ? null : valueOfShares;
+    return valueOfShares === Infinity ? 0 : valueOfShares;
   };
 
   formatAmount = amount => {
@@ -58,19 +58,15 @@ class App extends React.Component {
     const { totalShares, companyValuation, numberOfShares } = this.state;
 
     const holdings = this.calculateWorth();
-    let resultComponent = (
+    const totalWorth =
+      typeof holdings === 'number' && !Number.isNaN(holdings) ? this.formatAmount(holdings) : '$0.00';
+
+    const resultComponent = (
       <>
-        <p className={classes.resultText}>Fill the fields above to find out the value of your shares</p>
+        <p className={classes.resultText}>Your Shares Are Worth</p>
+        <p className={classes.amount}>{totalWorth}</p>
       </>
     );
-    if (typeof holdings === 'number' && !Number.isNaN(holdings)) {
-      resultComponent = (
-        <>
-          <p className={classes.resultText}>Your Shares Are Worth</p>
-          <p className={classes.amount}>{this.formatAmount(this.calculateWorth())}</p>
-        </>
-      );
-    }
 
     return (
       <div className={classes.main}>
@@ -82,21 +78,15 @@ class App extends React.Component {
             className={classes.textInput}
             margin="normal"
             value={totalShares}
-            InputLabelProps={{
-              shrink: true,
-            }}
             onChange={e => this.handleChange(e.target.value, 'totalShares')}
           />
           <TextField
             id="company-valuation"
-            label="The Current Value Of The Company"
+            label="The Current Value Of The Company (in USD)"
             className={classes.textInput}
             margin="normal"
             value={companyValuation}
             onChange={e => this.handleChange(e.target.value, 'companyValuation')}
-            InputProps={{
-              startAdornment: <InputAdornment position="start">$</InputAdornment>,
-            }}
           />
           <Dropdown
             setValueFn={this.prefillCompanyValuation}
@@ -113,9 +103,6 @@ class App extends React.Component {
             margin="normal"
             value={numberOfShares}
             onChange={e => this.handleChange(e.target.value, 'numberOfShares')}
-            InputLabelProps={{
-              shrink: true,
-            }}
           />
           <Dropdown
             setValueFn={this.prefillNumberOfShares}
