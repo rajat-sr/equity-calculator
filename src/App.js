@@ -1,6 +1,5 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import classes from './App.module.css';
 
 import Dropdown from './components/Dropdown';
@@ -59,7 +58,9 @@ class App extends React.Component {
 
     const holdings = this.calculateWorth();
     const totalWorth =
-      typeof holdings === 'number' && !Number.isNaN(holdings) ? this.formatAmount(holdings) : '$0.00';
+      typeof holdings === 'number' && !Number.isNaN(holdings)
+        ? this.formatAmount(holdings)
+        : '$0.00';
 
     const resultComponent = (
       <>
