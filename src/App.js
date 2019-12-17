@@ -1,10 +1,10 @@
 import React from 'react';
-import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import classes from './App.module.css';
 
 import Dropdown from './components/Dropdown';
+import Background from './assets/bg.jpg';
 
 class App extends React.Component {
   state = {
@@ -52,7 +52,7 @@ class App extends React.Component {
 
   prefillCompanyValuation = value => {
     this.setState({ companyValuation: value });
-  }
+  };
 
   render() {
     const { totalShares, companyValuation, numberOfShares } = this.state;
@@ -60,14 +60,14 @@ class App extends React.Component {
     const holdings = this.calculateWorth();
     let resultComponent = (
       <>
-        <Typography>Fill the fields above to find out the value of your shares</Typography>
+        <p className={classes.resultText}>Fill the fields above to find out the value of your shares</p>
       </>
     );
     if (typeof holdings === 'number' && !Number.isNaN(holdings)) {
       resultComponent = (
         <>
-          <Typography>Your Shares Are Worth</Typography>
-          <Typography variant="h4">{this.formatAmount(this.calculateWorth())}</Typography>
+          <p className={classes.resultText}>Your Shares Are Worth</p>
+          <p className={classes.amount}>{this.formatAmount(this.calculateWorth())}</p>
         </>
       );
     }
@@ -75,7 +75,7 @@ class App extends React.Component {
     return (
       <div className={classes.main}>
         <div className={classes.card}>
-          <Typography variant="h3">Equity Calculator</Typography>
+          <p className={classes.heading}>Equity Calculator</p>
           <TextField
             id="total-shares"
             label="Total Shares In The Company"
@@ -125,7 +125,9 @@ class App extends React.Component {
               { option: 'CTO', value: 200000 },
             ]}
           />
-          <div className={classes.result}>{resultComponent}</div>
+          <div className={classes.result} style={{ backgroundImage: `url(${Background})` }}>
+            {resultComponent}
+          </div>
         </div>
       </div>
     );
