@@ -88,6 +88,7 @@ class App extends React.Component {
             margin="normal"
             value={companyValuation}
             onChange={e => this.handleChange(e.target.value, 'companyValuation')}
+            helperText="Or choose the company stage from below"
           />
           <Select
             setValueFn={this.prefillCompanyValuation}
@@ -104,6 +105,7 @@ class App extends React.Component {
             margin="normal"
             value={numberOfShares}
             onChange={e => this.handleChange(e.target.value, 'numberOfShares')}
+            helperText="Or choose the engineering level from below"
           />
           <Select
             setValueFn={this.prefillNumberOfShares}
