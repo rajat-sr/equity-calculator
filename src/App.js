@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import classes from './App.module.css';
 
+import Dropdown from './components/Dropdown';
+
 class App extends React.Component {
   state = {
     totalShares: 1000,
@@ -44,6 +46,10 @@ class App extends React.Component {
     return '$' + amount.toLocaleString('en', stringFormatOptions);
   };
 
+  prefillNumberOfShares = value => {
+    this.setState({ numberOfShares: value });
+  };
+
   render() {
     const { totalShares, companyValuation, numberOfShares } = this.state;
 
@@ -63,21 +69,24 @@ class App extends React.Component {
     }
 
     return (
-      <div className={classes.Main}>
-        <div className={classes.Card}>
+      <div className={classes.main}>
+        <div className={classes.card}>
           <Typography variant="h3">Equity Calculator</Typography>
           <TextField
             id="total-shares"
-            label="Total Shares in the Company"
-            className={classes.TextInput}
+            label="Total Shares In The Company"
+            className={classes.textInput}
             margin="normal"
             value={totalShares}
+            InputLabelProps={{
+              shrink: true,
+            }}
             onChange={e => this.handleChange(e.target.value, 'totalShares')}
           />
           <TextField
             id="company-valuation"
-            label="Valuation of the Company"
-            className={classes.TextInput}
+            label="The Current Value Of The Company"
+            className={classes.textInput}
             margin="normal"
             value={companyValuation}
             onChange={e => this.handleChange(e.target.value, 'companyValuation')}
@@ -87,13 +96,24 @@ class App extends React.Component {
           />
           <TextField
             id="number-of-shares"
-            label="Number of shares you hold"
-            className={classes.TextInput}
+            label="Number Of Shares You Own In The Company"
+            className={classes.textInput}
             margin="normal"
             value={numberOfShares}
             onChange={e => this.handleChange(e.target.value, 'numberOfShares')}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
-          <div className={classes.Result}>{resultComponent}</div>
+          <Dropdown
+            setValueFn={this.prefillNumberOfShares}
+            options={[
+              { name: 'Junior Engineer', value: 80000 },
+              { name: 'Senior Engineer', value: 125000 },
+              { name: 'CTO', value: 200000 },
+            ]}
+          />
+          <div className={classes.result}>{resultComponent}</div>
         </div>
       </div>
     );
